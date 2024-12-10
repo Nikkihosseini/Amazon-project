@@ -1,7 +1,8 @@
 import {products} from "../data/products.js";
+import {cart} from "../data/cart.js";
+
 const $ = document
 
-console.log(products.stars)
 
 let html = ''
 products.forEach((product) => {
@@ -49,7 +50,7 @@ products.forEach((product) => {
                 Added
             </div>
 
-            <button class="add-to-cart-button button-primary">
+            <button data-id="${product.id}" class="add-to-cart-button button-primary add-to-cart-btn">
                 Add to Cart
             </button>
         </div>
@@ -58,6 +59,32 @@ products.forEach((product) => {
 
 $.querySelector('.products-grid')
     .innerHTML = html
+
+const addToCartBtn = $.querySelectorAll('.add-to-cart-btn')
+
+addToCartBtn.forEach(btn => {
+    btn.addEventListener('click' , () => {
+        let productId = btn.dataset.id
+
+        let matchingItem;
+
+        cart.forEach(cartItem => {
+            if(productId === cartItem.id){
+                matchingItem = cartItem
+            }
+        })
+
+        if(matchingItem){
+            matchingItem.quantity ++
+        }else {
+            cart.push({
+                id: productId,
+                quantity: 1
+            })
+        }
+        console.log(cart)
+    })
+})
 
 
 

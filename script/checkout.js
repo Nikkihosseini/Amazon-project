@@ -19,7 +19,7 @@ cart.forEach((cartItem) => {
     })
 
     cartItemWrapper += `
-         <div class="cart-item-container">
+         <div class="cart-item-container cart-item-${matchingProduct.id}">
             <div class="delivery-date">
               Delivery date: Tuesday, June 21
             </div>
@@ -101,14 +101,15 @@ cart.forEach((cartItem) => {
 $.querySelector('.order-summary')
     .innerHTML = cartItemWrapper
 
-const deleteBtn = $.querySelectorAll('.delete-btn')
-
-
-deleteBtn.forEach((btn) =>{
+$.querySelectorAll('.delete-btn')
+    .forEach((btn) =>{
     btn.addEventListener('click', () => {
         const productId = btn.dataset.id
 
         removeItemFromCart(productId)
 
+       const container = $.querySelector(`.cart-item-${productId}`)
+
+        container.remove()
     })
 })

@@ -62,26 +62,31 @@ $.querySelector('.products-grid')
 
 const addToCartBtn = $.querySelectorAll('.add-to-cart-btn')
 
+function addToCat(productId){
+    let matchingItem;
+
+    cart.forEach(cartItem => {
+        if(productId === cartItem.id){
+            matchingItem = cartItem
+        }
+    })
+
+    if(matchingItem){
+        matchingItem.quantity ++
+    }else {
+        cart.push({
+            id: productId,
+            quantity: 1
+        })
+    }
+}
+
+
 addToCartBtn.forEach(btn => {
     btn.addEventListener('click' , () => {
         let productId = btn.dataset.id
 
-        let matchingItem;
-
-        cart.forEach(cartItem => {
-            if(productId === cartItem.id){
-                matchingItem = cartItem
-            }
-        })
-
-        if(matchingItem){
-            matchingItem.quantity ++
-        }else {
-            cart.push({
-                id: productId,
-                quantity: 1
-            })
-        }
+        addToCat(productId)
         console.log(cart)
 
         let cartQuantity = 0

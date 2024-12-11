@@ -81,22 +81,23 @@ function addToCat(productId){
     }
 }
 
+function updateCartQuantity(){
+    let cartQuantity = 0
+
+    cart.forEach((item) => {
+        cartQuantity += item.quantity
+    })
+
+    $.querySelector('.cart-quantity')
+        .innerHTML = cartQuantity
+}
 
 addToCartBtn.forEach(btn => {
     btn.addEventListener('click' , () => {
         let productId = btn.dataset.id
 
         addToCat(productId)
-        console.log(cart)
-
-        let cartQuantity = 0
-
-        cart.forEach((item) => {
-            cartQuantity += item.quantity
-        })
-
-        $.querySelector('.cart-quantity')
-            .innerHTML = cartQuantity
+        updateCartQuantity()
     })
 })
 

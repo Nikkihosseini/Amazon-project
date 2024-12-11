@@ -1,11 +1,12 @@
 import {products} from "../data/products.js";
-import {cart, addToCat} from "../data/cart.js";
+import {cart, addToCat, saveToLcalstorage} from "../data/cart.js";
 import {formatCurrency} from "./utils/money.js"
 
 const $ = document
 
 
-let html = ''
+
+let html = '';
 products.forEach((product) => {
 
     html += `
@@ -63,6 +64,7 @@ $.querySelector('.products-grid')
 const addToCartBtn = $.querySelectorAll('.add-to-cart-btn')
 
 function updateCartQuantity(){
+
     let cartQuantity = 0
 
     cart.forEach((item) => {
@@ -71,13 +73,21 @@ function updateCartQuantity(){
 
     $.querySelector('.cart-quantity')
         .innerHTML = cartQuantity
+
+
 }
+updateCartQuantity()
+
+
+
+
 
 addToCartBtn.forEach(btn => {
     btn.addEventListener('click' , () => {
         let productId = btn.dataset.id
 
         addToCat(productId)
+        saveToLcalstorage()
         updateCartQuantity()
     })
 })

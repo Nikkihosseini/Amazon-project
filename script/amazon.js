@@ -1,5 +1,5 @@
 import {products} from "../data/products.js";
-import {cart} from "../data/cart.js";
+import {cart, addToCat} from "../data/cart.js";
 
 const $ = document
 
@@ -61,25 +61,6 @@ $.querySelector('.products-grid')
     .innerHTML = html
 
 const addToCartBtn = $.querySelectorAll('.add-to-cart-btn')
-
-function addToCat(productId){
-    let matchingItem;
-
-    cart.forEach(cartItem => {
-        if(productId === cartItem.id){
-            matchingItem = cartItem
-        }
-    })
-
-    if(matchingItem){
-        matchingItem.quantity ++
-    }else {
-        cart.push({
-            id: productId,
-            quantity: 1
-        })
-    }
-}
 
 function updateCartQuantity(){
     let cartQuantity = 0

@@ -3,6 +3,7 @@ import {products} from "../data/products.js"
 import {formatCurrency} from "./utils/money.js"
 
 
+
 const $ = document
 
 let cartItemWrapper = ''
@@ -107,6 +108,7 @@ $.querySelectorAll('.delete-btn')
         const productId = btn.dataset.id
 
         removeItemFromCart(productId)
+
 
        const container = $.querySelector(`.cart-item-${productId}`)
 

@@ -27,8 +27,8 @@ cart.forEach((cartItem) => {
     let deliveryOption;
 
     deliveryOptions.forEach((option) => {
-      id(Option.id === deliveryOptionsId){
-        deliveryOption = option;
+      if(Option.id === deliveryOptionsId){
+        deliveryOption = option
       }
     })
 

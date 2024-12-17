@@ -3,6 +3,7 @@ import {products, getProduct} from "../../data/products.js"
 import {formatCurrency} from "../utils/money.js"
 import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
 import {deliveryOptions, getdeliveryOption} from "../../data/deliveryOptions.js";
+import {renderPaymentSummary} from "./paymentSummary.js";
 
 
 
@@ -88,7 +89,7 @@ export function renderOrderSummary(){
       const priceString = deliveryOption.priceCents
         === 0
         ? 'FREE'
-        : `$${formatCurrency(deliveryOption.priceCents)} -`;
+        : `$${formatCurrency(deliveryOption.priceCents)}`;
 
       const isChecked = deliveryOption.id === cartItem.deliveryOptionsId;
 
@@ -106,7 +107,7 @@ export function renderOrderSummary(){
               ${dateString}
             </div>
             <div class="delivery-option-price">
-              $${priceString} - Shipping
+              ${priceString} - Shipping
             </div>
           </div>
       </div>
@@ -131,6 +132,8 @@ export function renderOrderSummary(){
         const container = $.querySelector(`.cart-item-${productId}`)
 
           container.remove()
+
+          renderPaymentSummary()
       })
   })
 
@@ -141,6 +144,7 @@ export function renderOrderSummary(){
           const {productId , deliveryOptionsId} = element.dataset
           updateDeliveryOptions(productId, deliveryOptionsId)
           renderOrderSummary()
+          renderPaymentSummary()
       })
     })
 

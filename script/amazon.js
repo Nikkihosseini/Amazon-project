@@ -73,7 +73,7 @@ function updateCartQuantity(){
     })
 
     $.querySelector('.cart-quantity')
-        .innerHTML = cartQuantity
+        .innerHTML = `${cartQuantity} items`;
 
 
 }

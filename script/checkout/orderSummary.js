@@ -134,6 +134,7 @@ export function renderOrderSummary(){
           container.remove()
 
           renderPaymentSummary()
+          updateCartQuantity()
       })
   })
 
@@ -150,3 +151,18 @@ export function renderOrderSummary(){
 
   }
 
+
+  function updateCartQuantity(){
+
+    let cartQuantity = 0
+
+    cart.forEach((item) => {
+        cartQuantity += item.quantity
+    })
+
+    $.querySelector('.return-to-home-link')
+        .innerHTML = `${cartQuantity} items`;
+
+
+}
+updateCartQuantity()

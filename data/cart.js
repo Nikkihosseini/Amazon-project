@@ -20,7 +20,12 @@ export function saveToLcalstorage(){
     localStorage.setItem('cart' , JSON.stringify(cart))
 }
 
-export function addToCat(productId){
+
+
+
+
+
+export function addToCat(productId, quantity){
     let matchingItem;
 
     cart.forEach(cartItem => {
@@ -30,11 +35,11 @@ export function addToCat(productId){
     })
 
     if(matchingItem){
-        matchingItem.quantity ++
+        matchingItem.quantity += quantity;
     }else {
         cart.push({
             id: productId,
-            quantity: 1,
+            quantity,
             deliveryOptionsId: '1'
         })
     }

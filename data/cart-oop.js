@@ -1,95 +1,119 @@
-export let cart = undefined;
-
-loadFromLocalStorage();
-
-export function loadFromLocalStorage(){
-     let cart = JSON.parse(localStorage.getItem('cart'))
-
-     if(!cart){
-        cart = [
-            {
-                id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
-                quantity: 2,
-                deliveryOptionsId: '2'
-            },
-            {
-                id: "83d4ca15-0f35-48f5-b7a3-1ea210004f2e",
-                quantity: 2,
-                deliveryOptionsId: '1'
+function Cart(localStorageKey){
+    const cart = {
+        cartItems: undefined,
+    
+        loadFromLocalStorage(){
+            this.cartItems = JSON.parse(localStorage.getItem(localStorageKey))
+        
+             if(!this.cartItems){
+                this.cartItems = [
+                    {
+                        id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
+                        quantity: 2,
+                        deliveryOptionsId: '2'
+                    },
+                    {
+                        id: "83d4ca15-0f35-48f5-b7a3-1ea210004f2e",
+                        quantity: 2,
+                        deliveryOptionsId: '1'
+                    }
+                ]
             }
-        ]
+        },
+    
+        saveToLcalstorage(){
+            localStorage.setItem(localStorageKey , JSON.stringify(this.cartItems))
+        },
+    
+        
+    
+        addToCat(productId, quantity){
+            let matchingItem;
+    
+            this.cartItems.forEach(cartItem => {
+                if(productId === cartItem.id){
+                    matchingItem = cartItem
+                }
+            })
+    
+            if(matchingItem){
+                matchingItem.quantity += quantity;
+            }else {
+                this.cartItems.push({
+                    id: productId,
+                    quantity,
+                    deliveryOptionsId: '1'
+                })
+            }
+            this.saveToLcalstorage()
+        },
+    
+        
+        removeItemFromCart(productId){
+    
+            let newCart = []
+    
+            this.cartItems.forEach((item) => {
+                if(productId !== item.id){
+                    newCart.push(item)
+                }
+            })
+            this.cartItems = newCart;
+            this.saveToLcalstorage()
+        },
+    
+        
+        updateDeliveryOptions(productId, deliveryOptionsId){
+            let matchingItem;
+    
+            this.cartItems.forEach(cartItem => {
+                if(productId === cartItem.id){
+                    matchingItem = cartItem
+                }
+            })
+    
+            matchingItem.deliveryOptionsId = deliveryOptionsId;
+    
+            this.saveToLcalstorage()
+    },
+
+    
+    updateQuantity(productId, newQuantity) {
+        let matchingItem;
+    
+        this.cartItems.forEach((cartItem) => {
+        if (productId === cartItem.id) {
+            matchingItem = cartItem;
+        }
+        });
+    
+        matchingItem.quantity = newQuantity;
+    
+        this.saveToLcalstorage()
     }
-}
-
-export function saveToLcalstorage(){
-    localStorage.setItem('cart' , JSON.stringify(cart))
-}
-
-
-
-
-
-
-export function addToCat(productId, quantity){
-    let matchingItem;
-
-    cart.forEach(cartItem => {
-        if(productId === cartItem.id){
-            matchingItem = cartItem
-        }
-    })
-
-    if(matchingItem){
-        matchingItem.quantity += quantity;
-    }else {
-        cart.push({
-            id: productId,
-            quantity,
-            deliveryOptionsId: '1'
-        })
+    
     }
-    saveToLcalstorage()
+    
+    return cart;
 }
 
 
-export function removeItemFromCart(productId){
+const cart = Cart('cart-oop');
 
-    let newCart = []
-
-    cart.forEach((item) => {
-        if(productId !== item.id){
-            newCart.push(item)
-        }
-    })
-    cart = newCart;
-    saveToLcalstorage()
-}
+const businessCart = Cart('cart-business');
 
 
-export function updateDeliveryOptions(productId, deliveryOptionsId){
-    let matchingItem;
 
-    cart.forEach(cartItem => {
-        if(productId === cartItem.id){
-            matchingItem = cartItem
-        }
-    })
+cart.loadFromLocalStorage()
+businessCart.loadFromLocalStorage()
 
-    matchingItem.deliveryOptionsId = deliveryOptionsId;
+console.log(cart)
+console.log(businessCart)
 
-    saveToLcalstorage()
-}
 
-export function updateQuantity(productId, newQuantity) {
-    let matchingItem;
-  
-    cart.forEach((cartItem) => {
-      if (productId === cartItem.id) {
-        matchingItem = cartItem;
-      }
-    });
-  
-    matchingItem.quantity = newQuantity;
-  
-    saveToLcalstorage()
-}
+
+
+
+
+
+
